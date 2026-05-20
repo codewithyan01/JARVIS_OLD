@@ -60,7 +60,7 @@ def aiProcess(command):
 
 def get_news():
 
-    api_key = "77872eedf3b045e38357592cba4704f1"
+    api_key = "a"
 
     url = f"https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey={api_key}"
 
@@ -208,7 +208,7 @@ if __name__ == "__main__":
         # obtain audio from the microphone
         r = sr.Recognizer()
          
-        print("recognizing...")
+        print("Recognizing...")
         try:
             with sr.Microphone() as source:
                 print("Listening...")
