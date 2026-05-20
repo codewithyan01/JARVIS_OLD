@@ -12,8 +12,9 @@ import edge_tts
 from playsound import playsound
 import os
 from datetime import datetime
-
-
+import psutil
+import pyjokes
+import pyautogui
 
 recognizer = sr.Recognizer()
 # engine = pyttsx3.init() 
@@ -82,7 +83,33 @@ def get_news():
     for i in range(3):
         title = articles[i]["title"]
         speak(title)
- 
+
+
+def take_screenshot():
+    image = pyautogui.screenshot()
+
+    file_name = "screenshot.png"
+    image.save(file_name)
+
+    speak("Screenshot taken and saved sir.")
+
+def tell_joke():
+    joke = pyjokes.get_joke()
+    speak(joke)
+
+def battery_status():
+    battery = psutil.sensors_battery()
+
+    if battery is None:
+        speak("Battery information is not available sir.")
+        return
+
+    percent = battery.percent
+    plugged = battery.power_plugged
+
+    status = "charging" if plugged else "not charging"
+
+    speak(f"Battery is at {percent} percent and is currently {status}.")
 
 def wish_me():
 
@@ -156,12 +183,19 @@ def processCommand(c):
         tell_date()
     elif "news" in c.lower():
         get_news()
-
+    elif "battery" in c.lower():
+        battery_status()
+    elif "joke" in c.lower():
+        tell_joke()
+    elif "screenshot" in c.lower():
+        take_screenshot()
+    elif "exit" in c.lower() or "quit" in c.lower():
+        speak("Goodbye sir. Have a nice day!")
+        exit()
     else:
         # Let OpenAI handle the request
         output = aiProcess(c)
         speak(output) 
-
 
 
 
